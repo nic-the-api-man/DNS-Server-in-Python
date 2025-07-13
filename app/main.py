@@ -1,4 +1,12 @@
 import socket
+import struct
+
+
+
+
+
+
+
 
 
 def main():
@@ -13,7 +21,7 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-
+            print(source)
             # header = 
             
             response = b"" 
