@@ -14,9 +14,9 @@ def main():
         try:
             buf, source = udp_socket.recvfrom(512)
 
-            header = 
+            # header = 
             
-            response = b"" + header
+            response = b"" 
             
     
             udp_socket.sendto(response, source)
