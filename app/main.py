@@ -13,9 +13,11 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-    
-            response = b""
-            print(response)
+
+            header = 
+            
+            response = b"" + header
+            
     
             udp_socket.sendto(response, source)
         except Exception as e:
