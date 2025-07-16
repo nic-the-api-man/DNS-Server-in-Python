@@ -32,18 +32,15 @@ def to_bytes(self):
         (self.ra << 7) |
         (self.z << 4) |
         (self.rcode)
-
-
     )
-    return struct.pack("!6H",
+    return struct.pack("!6H", # 6 values, all 2-byte unsigned ints
                        self.id,
                        flags,
                        self.qdcount,
                        self.ancount,
                        self.nscount,
                        self.arcount
-                       
-                       
+                                       
                        
                        
                        )
