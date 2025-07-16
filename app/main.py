@@ -1,12 +1,52 @@
 import socket
 import struct
 
+class DNSHeader:
+    def __init__(self):
+        #attributes go here
+        # 16-bit fields
+        self.id =  1234
+        self.qdcount = 0
+        self.ancount = 0
+        self.nscount = 0
+        self.arcount = 0
+
+        #Bit-packed fields (stored individually first)
+        self.qr = 1         # Response
+        self.opcode = 0     # Standard query
+        self.aa = 0         # Not authoritative
+        self.tc = 0         # Not truncated
+        self.rd = 0         # No recursion desired
+        self.ra = 0         # No recusion available
+        self.z = 0          # Reserved  (3 bits)
+        self.rcode = 0      # no error
+        
+
+def to_bytes(self):
+    flags = (
+        (self.qr << 15) |
+        (self.opcode << 11) |
+        (self.aa << 10) |
+        (self.tc << 9) |
+        (self.rd << 8) |
+        (self.ra << 7) |
+        (self.z << 4) |
+        (self.rcode)
 
 
-
-
-
-
+    )
+    return struct.pack("!6H",
+                       self.id,
+                       flags,
+                       self.qdcount,
+                       self.ancount,
+                       self.nscount,
+                       self.arcount
+                       
+                       
+                       
+                       
+                       )
 
 
 def main():
