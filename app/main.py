@@ -2,7 +2,7 @@ import socket
 import struct
 
 class DNSQuestion:
-    def __init__(self):
+    def __init__(self, domain_name, qtype=1, qclass=1):
         self.domain_name = domain_name # e.g., codecrafterts.io
         self.qtype = qtype             # usually 1 (A record)
         self.qclass = qclass           # usually 1 (IN class)
