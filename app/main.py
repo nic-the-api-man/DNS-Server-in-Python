@@ -9,7 +9,7 @@ class DNSQuestion:
 
     def to_bytes(self):
         # Encodes the domain name into label format
-        parts =self.domain_name_split('.')
+        parts = self.domain_name.split('.')
         name_bytes = b''
         for part in parts:
             name_bytes += bytes([len(part)]) +part.encode()
