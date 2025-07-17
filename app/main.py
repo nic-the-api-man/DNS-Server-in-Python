@@ -91,7 +91,7 @@ def main():
             
             response = b''
             header = DNSHeader()
-            question = DNSQuestion()
+            question = DNSQuestion(question)
             response = header.to_bytes() + question.to_bytes()
             
     
