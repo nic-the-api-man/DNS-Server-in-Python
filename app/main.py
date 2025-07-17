@@ -23,6 +23,7 @@ class DNSAnswer:
         ip_bytes = socket.inet.aton(self.ip_address) # Converts 8.8.8.8 to 4 bytes
         rdlength_bytes = struct.pack("!H", len(ip_bytes)) # 4 bytes for IPV4
 
+        print(name + type_bytes + class_bytes + ttl_bytes + rdlength_bytes + ip_bytes)
         return name + type_bytes + class_bytes + ttl_bytes + rdlength_bytes + ip_bytes
     
 
