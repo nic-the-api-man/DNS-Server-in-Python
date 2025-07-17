@@ -20,7 +20,7 @@ class DNSAnswer:
         name = self.encode_name()
         type_bytes = struct.pack("!H", 1) # A Record
         class_bytes = struct.pack("!H", 1) # IN class
-        ttl_bytes = struct.pack("!H", self.ttl) # 4 byte TTL
+        ttl_bytes = struct.pack("!I", self.ttl) # 4 byte TTL
         ip_bytes = socket.inet_aton(self.ip_address) # Converts 8.8.8.8 to 4 bytes
         rdlength_bytes = struct.pack("!H", len(ip_bytes)) # 4 bytes for IPV4
 
