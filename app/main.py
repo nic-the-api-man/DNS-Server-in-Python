@@ -7,21 +7,21 @@ class DNSQuestion:
         self.qtype = qtype             # usually 1 (A record)
         self.qclass = qclass           # usually 1 (IN class)
 
-        def to_bytes(self):
-            # Encodes the domain name into label format
-            parts =self.domain_name_split('.')
-            name_bytes = b''
-            for part in parts:
-                name_bytes += bytes([len(part)]) +part.encode()
-            name_bytes += b'\00' #null byte to end the domain name
+    def to_bytes(self):
+        # Encodes the domain name into label format
+        parts =self.domain_name_split('.')
+        name_bytes = b''
+        for part in parts:
+            name_bytes += bytes([len(part)]) +part.encode()
+        name_bytes += b'\00' #null byte to end the domain name
 
-            # Step 2: Encode type and class  (2 bytes each, big-endian)
-            qtype_bytes = struct.pack('!H', self.qtype)
-            qclass_bytes = struct.pack('!H', self.qclass)
+        # Step 2: Encode type and class  (2 bytes each, big-endian)
+        qtype_bytes = struct.pack('!H', self.qtype)
+        qclass_bytes = struct.pack('!H', self.qclass)
 
-            # Step 3: Concat everything
+        # Step 3: Concat everything
 
-            return name_bytes + qtype_bytes + qclass_bytes
+        return name_bytes + qtype_bytes + qclass_bytes
 
 
         
