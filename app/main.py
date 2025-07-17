@@ -22,7 +22,7 @@ class DNSHeader:
         self.rcode = 0      # no error
         
 
-def to_bytes(self):
+def to_bytes():
     flags = (
         (self.qr << 15) |
         (self.opcode << 11) |
@@ -62,7 +62,7 @@ def main():
             print(source)
             
             
-            response = "HELLO"
+            response = response.to_bytes()
             
     
             udp_socket.sendto(response, source)
