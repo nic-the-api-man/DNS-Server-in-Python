@@ -1,12 +1,37 @@
 import socket
 import struct
 
+class DNSQuestion:
+    def __init__(self):
+        self.domain_name = domain_name # e.g., codecrafterts.io
+        self.qtype = qtype             # usually 1 (A record)
+        self.qclass = qclass           # usually 1 (IN class)
+
+        def to_bytes(self):
+            # Encodes the domain name into label format
+            parts =self.domain_name_split('.')
+            name_bytes = b''
+            for part in parts:
+                name_bytes += bytes([len(part)]) +part.encode()
+            name_bytes += b'\00' #null byte to end the domain name
+
+            # Step 2: Encode type and class  (2 bytes each, big-endian)
+            qtype_bytes = struct.pack('!H', self.qtype)
+            qclass_bytes = struct.pack('!H', self.qclass)
+
+            # Step 3: Concat everything
+
+            return name_bytes + qtype_bytes + qclass_bytes
+
+
+        
+
 class DNSHeader:
     def __init__(self):
         #attributes go here
         # 16-bit fields
         self.id =  1234
-        self.qdcount = 0
+        self.qdcount = 1
         self.ancount = 0
         self.nscount = 0
         self.arcount = 0
@@ -66,7 +91,8 @@ def main():
             
             response = b''
             header = DNSHeader()
-            response = header.to_bytes()
+            question = DNSQuestion()
+            response = header.to_bytes() + question.to_bytes()
             
     
             udp_socket.sendto(response, source)
