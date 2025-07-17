@@ -65,6 +65,7 @@ def main():
             
     
             udp_socket.sendto(response, source)
+            print(source)
         except Exception as e:
             print(f"Error receiving data: {e}")
             break
