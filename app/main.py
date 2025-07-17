@@ -111,7 +111,7 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-
+            print(buf)
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
