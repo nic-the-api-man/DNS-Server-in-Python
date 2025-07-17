@@ -12,7 +12,7 @@ class DNSAnswer:
         parts = self.domain_name.split(".")
         encoded = b''
         for part in parts:
-            encoded += bytes([[len(part)]]) + part.encode()
+            encoded += bytes([len(part)]) + part.encode()
         encoded += b'\x00'
     
     def to_bytes(self):
@@ -23,7 +23,7 @@ class DNSAnswer:
         ip_bytes = socket.inet.aton(self.ip_address) # Converts 8.8.8.8 to 4 bytes
         rdlength_bytes = struct.pack("!H", len(ip_bytes)) # 4 bytes for IPV4
 
-        print(name + type_bytes + class_bytes + ttl_bytes + rdlength_bytes + ip_bytes)
+    
         return name + type_bytes + class_bytes + ttl_bytes + rdlength_bytes + ip_bytes
     
 
@@ -112,7 +112,7 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf)
+        
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
