@@ -51,15 +51,15 @@ def main():
     print("Logs from your program will appear here!")
 
     # Uncomment this block to pass the first stage
-    #
+    # Starts the UDP server at port 2053
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp_socket.bind(("127.0.0.1", 2053))
     
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf)
-            # header = 
+            # print(buf)
+            
             
             response = b"" 
             
