@@ -1,6 +1,33 @@
 import socket
 import struct
 
+#This class represents a DNS query. Can convert itself into bytes following a a DNS query
+class DNSAnswer:
+    def __init__(self, domain_name, ip_address, ttl=60):
+        self.domain_name = domain_name
+        self.ip_address = ip_address
+        self.ttl = ttl
+
+    def encode_name(self):
+        parts = self.domain_name.split(".")
+        encoded = b''
+        for part in parts:
+            encoded += bytes([[len(part)]]) + part.encode()
+        encoded += b'\x00'
+    
+    def to_bytes(self):
+        name = self.encode_name()
+        type_bytes = struct.pack("!H", 1) # A Record
+        class_bytes = struct.pack("!H", 1) # IN class
+        ttl_bytes = struct.pack("!H", self.ttl) # 4 byte TTL
+        ip_bytes = socket.inet.aton(self.ip_address) # Converts 8.8.8.8 to 4 bytes
+        rdlength_bytes = struct.pack("!H", len(ip_bytes)) # 4 bytes for IPV4
+
+        return name + type_bytes + class_bytes + ttl_bytes + rdlength_bytes + ip_bytes
+    
+
+
+
 class DNSQuestion:
     def __init__(self, domain_name, qtype=1, qclass=1):
         self.domain_name = domain_name # e.g., codecrafterts.io
@@ -20,7 +47,6 @@ class DNSQuestion:
         qclass_bytes = struct.pack('!H', self.qclass)
 
         # Step 3: Concat everything
-
         return name_bytes + qtype_bytes + qclass_bytes
 
 
@@ -32,7 +58,7 @@ class DNSHeader:
         # 16-bit fields
         self.id =  1234
         self.qdcount = 1
-        self.ancount = 0
+        self.ancount = 1
         self.nscount = 0
         self.arcount = 0
 
@@ -85,14 +111,12 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf)
-            # print(buf)
-            # print(source)
-            
-            
+            print(source)
+
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
+            answer = DNSAnswer('codecrafters.io', '8.8.8.8')
             response = header.to_bytes() + question.to_bytes()
             
     
