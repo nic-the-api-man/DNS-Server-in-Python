@@ -33,7 +33,14 @@ class DNSHeader:
             (self.z << 4) |
             (self.rcode)
         )
-        #
+        print(struct.pack("!6H", # 6 values, all 2-byte unsigned ints
+                        self.id,
+                        flags,
+                        self.qdcount,
+                        self.ancount,
+                        self.nscount,
+                        self.arcount))
+        
         return struct.pack("!6H", # 6 values, all 2-byte unsigned ints
                         self.id,
                         flags,
