@@ -62,7 +62,7 @@ def main():
             print(source)
             
             
-            response = b""
+            response = bug.to_bytes()
             
     
             udp_socket.sendto(response, source)
