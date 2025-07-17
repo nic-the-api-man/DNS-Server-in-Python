@@ -92,7 +92,7 @@ def main():
             
             response = b''
             header = DNSHeader()
-            question = DNSQuestion(question)
+            question = DNSQuestion('codecrafters.io')
             response = header.to_bytes() + question.to_bytes()
             
     
