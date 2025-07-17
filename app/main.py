@@ -22,28 +22,28 @@ class DNSHeader:
         self.rcode = 0      # no error
         
 
-def to_bytes(self):
-    flags = (
-        (self.qr << 15) |
-        (self.opcode << 11) |
-        (self.aa << 10) |
-        (self.tc << 9) |
-        (self.rd << 8) |
-        (self.ra << 7) |
-        (self.z << 4) |
-        (self.rcode)
-    )
-    return struct.pack("!6H", # 6 values, all 2-byte unsigned ints
-                       self.id,
-                       flags,
-                       self.qdcount,
-                       self.ancount,
-                       self.nscount,
-                       self.arcount
-                                       
-                       
-                       
-                       )
+    def to_bytes(self):
+        flags = (
+            (self.qr << 15) |
+            (self.opcode << 11) |
+            (self.aa << 10) |
+            (self.tc << 9) |
+            (self.rd << 8) |
+            (self.ra << 7) |
+            (self.z << 4) |
+            (self.rcode)
+        )
+        return struct.pack("!6H", # 6 values, all 2-byte unsigned ints
+                        self.id,
+                        flags,
+                        self.qdcount,
+                        self.ancount,
+                        self.nscount,
+                        self.arcount
+                                        
+                        
+                        
+                        )
 
 
 def main():
