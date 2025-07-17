@@ -3,18 +3,17 @@ import struct
 
 #This class represents a DNS query. Can convert itself into bytes following a a DNS query
 class DNSAnswer:
-    def __init__(self, domain_name, ip_address, ttl=60):
-        self.domain_name = domain_name
+    def __init__(self, ip_address, ttl=60):
         self.ip_address = ip_address
         self.ttl = ttl
 
-    def encode_name(self):
-        parts = self.domain_name.split(".")
-        encoded = b''
-        for part in parts:
-            encoded += bytes([len(part)]) + part.encode()
-        encoded += b'\x00'
-        return encoded
+    # def encode_name(self):
+    #     parts = self.domain_name.split(".")
+    #     encoded = b''
+    #     for part in parts:
+    #         encoded += bytes([len(part)]) + part.encode()
+    #     encoded += b'\x00'
+    #     return encoded
     
     def to_bytes(self):
         name = self.encode_name()
@@ -117,7 +116,7 @@ def main():
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
-            answer = DNSAnswer('codecrafters.io', '8.8.8.8')
+            answer = DNSAnswer('8.8.8.8')
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
             print(response)
     
