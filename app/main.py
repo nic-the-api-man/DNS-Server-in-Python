@@ -58,7 +58,8 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            # print(buf)
+            print(buf)
+            print(source)
             
             
             response = b""
