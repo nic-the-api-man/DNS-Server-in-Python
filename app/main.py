@@ -117,7 +117,7 @@ def main():
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
-            answer = DNSAnswer('codecrafters.io', '8.8.8.8')
+            answer = DNSAnswer('8.8.8.8')
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
             
     
