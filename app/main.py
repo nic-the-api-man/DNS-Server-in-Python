@@ -61,11 +61,11 @@ def main():
             # print(buf)
             
             
-            response = response.to_bytes()
+            response = b""
             
     
             udp_socket.sendto(response, source)
-            print(buf)
+            
         except Exception as e:
             print(f"Error receiving data: {e}")
             break
