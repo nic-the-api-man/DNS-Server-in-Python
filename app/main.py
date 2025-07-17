@@ -3,7 +3,7 @@ import struct
 
 #This class represents a DNS query. Can convert itself into bytes following a a DNS query
 class DNSAnswer:
-    def __init__(self, ip_address, ttl=60):
+    def __init__(self, domain_name, ip_address, ttl=60):
         self.domain_name = domain_name
         self.ip_address = ip_address
         self.ttl = ttl
@@ -117,9 +117,10 @@ def main():
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
-            answer = DNSAnswer('codecrafters.io','8.8.8.8')
-            response = header.to_bytes() + answer.to_bytes()
-            print(response)
+            answer = DNSAnswer('codecrafters.io', '8.8.8.8')
+            response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
+            
+            print("Buffer" + response)
     
             udp_socket.sendto(response, source)
             
