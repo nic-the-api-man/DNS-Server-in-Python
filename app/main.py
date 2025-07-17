@@ -111,14 +111,12 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(source)
 
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
-            answer = answer.to_bytes()
-            response = header.to_bytes() + question.to_bytes()
+            response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
             
     
             udp_socket.sendto(response, source)
