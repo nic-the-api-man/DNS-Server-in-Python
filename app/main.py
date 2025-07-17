@@ -58,11 +58,11 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf)
-            print(source)
+            # print(buf)
+            # print(source)
             
             
-            response = response.to_bytes()
+            response = buf.to_bytes()
             
     
             udp_socket.sendto(response, source)
