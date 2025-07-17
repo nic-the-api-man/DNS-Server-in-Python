@@ -22,7 +22,7 @@ class DNSHeader:
         self.rcode = 0      # no error
         
 
-    def to_bytes():
+    def to_bytes(self):
         flags = (
             (self.qr << 15) |
             (self.opcode << 11) |
