@@ -14,6 +14,7 @@ class DNSAnswer:
         for part in parts:
             encoded += bytes([len(part)]) + part.encode()
         encoded += b'\x00'
+        print(encoded)
         return encoded
     
     def to_bytes(self):
