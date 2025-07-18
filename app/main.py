@@ -15,7 +15,7 @@ class DNSAnswer: #This class represents a DNS query. Can convert itself into byt
         for part in parts:
             encoded += bytes([len(part)]) + part.encode()
         encoded += b'\x00'
-        print(encoded)
+        # print(encoded)
         return encoded
     
     def to_bytes(self):
@@ -51,7 +51,7 @@ class DNSQuestion:
         qclass_bytes = struct.pack('!H', self.qclass)
 
         # Step 3: Concat everything
-        print(name_bytes + qtype_bytes + qclass_bytes)
+        # print(name_bytes + qtype_bytes + qclass_bytes)
         return name_bytes + qtype_bytes + qclass_bytes
     
 class DNSHeader:
@@ -129,7 +129,9 @@ def main():
             header.rd = rd
 
             # Question Parsing
-            question = DNSQuestion('codecrafters.io')
+            qname = struct.unpack("!H", buf[:0])
+            print(qname)
+            question = DNSQuestion()
 
             # Answer Parsing
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
