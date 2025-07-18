@@ -53,33 +53,29 @@ class DNSQuestion:
         return name_bytes + qtype_bytes + qclass_bytes
 
 
-# def DNS_Header_Parser(self):
-#     id = buf[:12]
-#     qr =
-#     opcode =
-#     rd = 
-        
 
+    
 class DNSHeader:
-    def __init__(self):
-        #attributes go here
-        # 16-bit fields
-        self.id =  1234
-        self.qdcount = 1
-        self.ancount = 1
-        self.nscount = 0
-        self.arcount = 0
+    def __init__(self, id=0, qr=1, opcode=0, aa=0, tc=0, rd=0, ra=0, z=0, rcode=0,
+                 qdcount=1, ancount=1, nscount=0, arcount=0):
+        
+        # 16-bit fields section counts
+        self.id =  id
+        self.qdcount = qdcount
+        self.ancount = ancount
+        self.nscount = nscount
+        self.arcount = arcount
 
         #Bit-packed fields (stored individually first)
-        self.qr = 1         # Response
-        self.opcode = 0     # Standard query
-        self.aa = 0         # Not authoritative
-        self.tc = 0         # Not truncated
-        self.rd = 0         # No recursion desired
-        self.ra = 0         # No recusion available
-        self.z = 0          # Reserved  (3 bits)
-        self.rcode = 0      # no error
-        
+        self.qr = qr         # Response
+        self.opcode = opcode   # Standard query
+        self.aa = aa         # Not authoritative
+        self.tc = tc         # Not truncated
+        self.rd = rd         # No recursion desired
+        self.ra = ra         # No recusion available
+        self.z = z          # Reserved  (3 bits)
+        self.rcode = rcode      # no error
+    
 
     def to_bytes(self):
         flags = (
@@ -92,6 +88,7 @@ class DNSHeader:
             (self.z << 4) |
             (self.rcode)
         )
+
 
         
         return struct.pack("!6H", # 6 values, all 2-byte unsigned ints
@@ -117,7 +114,6 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf[:12])
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
