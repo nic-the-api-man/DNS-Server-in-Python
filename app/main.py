@@ -15,7 +15,7 @@ class DNSAnswer: #This class represents a DNS query. Can convert itself into byt
         for part in parts:
             encoded += bytes([len(part)]) + part.encode()
         encoded += b'\x00'
-        # print(encoded)
+        print(encoded)
         return encoded
     
     def to_bytes(self):
