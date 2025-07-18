@@ -131,7 +131,7 @@ def main():
             # Question Parsing
             qname = struct.unpack("!H", buf[:2])[0]
             print(qname)
-            question = DNSQuestion()
+            question = DNSQuestion('codecrafters.io')
 
             # Answer Parsing
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
