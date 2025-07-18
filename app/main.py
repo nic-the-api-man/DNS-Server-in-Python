@@ -99,10 +99,19 @@ class DNSHeader:
                                     )
     
 
-def DNSQuestion_parse(buf):
-    return buf[12]
-    
-
+def parse_domain_name(raw, offset):
+    offset = 12
+    labels = []
+    while True:
+        length = raw[offset]
+        if length == 0:
+            break
+        offset += 1 # moves to the stard of the label
+        label = raw[offset:offset+length].decode()
+        labels.append(label)
+        offset += length
+    return '.'.join(labels)
+        
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -115,8 +124,7 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf[12:])
-            print(buf)
+
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
 
@@ -133,8 +141,8 @@ def main():
             header.rd = rd
 
             # Question Parsing
-            
-            question = DNSQuestion('google.com')
+            parsed_domain_name = parse_domain_name(buf,12)
+            question = DNSQuestion(parsed_domain_name)
 
             # Answer Parsing
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
