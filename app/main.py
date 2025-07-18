@@ -144,8 +144,8 @@ def main():
             # rd = (flags >> 8) & 0x1 # 1 (Bit 8)
             # response = b''
             
-            headers = header_parser(buf)
-
+            headers1 = header_parser(buf)
+            print(headers1)
             header = DNSHeader(headers[0],
                                headers[1],
                                headers[2]
