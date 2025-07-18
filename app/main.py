@@ -74,7 +74,7 @@ class DNSHeader:
         self.rd = rd         # No recursion desired
         self.ra = ra         # No recusion available
         self.z = z          # Reserved  (3 bits)
-        self.rcode = rcode      # no error
+        self.rcode = 4      # no error
     
 
     def to_bytes(self):
