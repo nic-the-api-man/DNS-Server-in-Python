@@ -68,10 +68,10 @@ class DNSHeader:
 
         #Bit-packed fields (stored individually first)
         self.qr = qr         # Response
-        self.opcode = 9   # Standard query
+        self.opcode = opcode   # Standard query
         self.aa = aa         # Not authoritative
         self.tc = tc         # Not truncated
-        self.rd = 1         # No recursion desired
+        self.rd = rd         # No recursion desired
         self.ra = ra         # No recusion available
         self.z = z          # Reserved  (3 bits)
         self.rcode = rcode      # no error
@@ -115,8 +115,8 @@ def main():
         try:
             buf, source = udp_socket.recvfrom(512)
             transaction_id = struct.unpack("!H", buf[:2])[0]
-            
-
+            flags = struct.unpack("!H", buf[2:4])[0]
+            print(flags)
             response = b''
             header = DNSHeader(transaction_id)
             question = DNSQuestion('codecrafters.io')
