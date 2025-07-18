@@ -129,7 +129,7 @@ def main():
             header.rd = rd
 
             # Question Parsing
-            print(buf)
+            print(type(buf))
             question = DNSQuestion('codecrafters.io')
 
             # Answer Parsing
