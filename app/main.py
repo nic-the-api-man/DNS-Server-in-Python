@@ -100,6 +100,8 @@ class DNSHeader:
                                     )
     
 
+def question_parse(buf):
+    pass
 
 
 def main():
