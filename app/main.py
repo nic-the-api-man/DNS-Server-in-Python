@@ -1,8 +1,9 @@
 import socket
 import struct
 
-#This class represents a DNS query. Can convert itself into bytes following a a DNS query
-class DNSAnswer:
+
+
+class DNSAnswer: #This class represents a DNS query. Can convert itself into bytes following a a DNS query
     def __init__(self, domain_name, ip_address, ttl=60):
         self.domain_name = domain_name
         self.ip_address = ip_address
@@ -50,10 +51,8 @@ class DNSQuestion:
         qclass_bytes = struct.pack('!H', self.qclass)
 
         # Step 3: Concat everything
+        print(name_bytes + qtype_bytes + qclass_bytes)
         return name_bytes + qtype_bytes + qclass_bytes
-
-
-
     
 class DNSHeader:
     def __init__(self, id=0, qr=1, opcode=1, aa=0, tc=0, rd=0, ra=0, z=0, rcode=0,
@@ -74,7 +73,7 @@ class DNSHeader:
         self.rd = rd         # No recursion desired
         self.ra = ra         # No recusion available
         self.z = z          # Reserved  (3 bits)
-        self.rcode = 4      # no error
+        self.rcode = 4      # no error 4 = not implemented yet
     
 
     def to_bytes(self):
@@ -114,14 +113,13 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            transaction_id = struct.unpack("!H", buf[:2])[0]
-            flags = struct.unpack("!H", buf[2:4])[0]
+            transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
+            flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
 
+            # Header parsing
             qr = (flags >> 15) & 0x1 #1 bit
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
             rd = (flags >> 8) & 0x1 # 1 (Bit 8)
-
-    
             response = b''
             header = DNSHeader(transaction_id,
                                qdcount=1,
@@ -130,8 +128,10 @@ def main():
             header.opcode = opcode
             header.rd = rd
 
-
+            # Question Parsing
             question = DNSQuestion('codecrafters.io')
+
+            # Answer Parsing
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
 
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
