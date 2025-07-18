@@ -14,7 +14,7 @@ class DNSAnswer:
         for part in parts:
             encoded += bytes([len(part)]) + part.encode()
         encoded += b'\x00'
-        print(encoded)
+        # print(encoded)
         return encoded
     
     def to_bytes(self):
@@ -117,14 +117,13 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf[12])
+            print(buf)
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
             
-            # print(response)
     
             udp_socket.sendto(response, source)
             
