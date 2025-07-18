@@ -132,6 +132,7 @@ def main():
             offset = 12
             domain_name = buf[offset]
             qtype, qclass = struct.unpack("!HH",buf[offset:offset+4])
+            print(type(domain_name, qtype, qclass))
             question = DNSQuestion(domain_name, qtype, qclass)
 
             # Answer Parsing
