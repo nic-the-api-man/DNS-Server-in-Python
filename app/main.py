@@ -51,7 +51,6 @@ class DNSQuestion:
         qclass_bytes = struct.pack('!H', self.qclass)
 
         # Step 3: Concat everything
-        print(name_bytes + qtype_bytes + qclass_bytes)
         return name_bytes + qtype_bytes + qclass_bytes
     
 class DNSHeader:
@@ -100,8 +99,9 @@ class DNSHeader:
                                     )
     
 
-def question_parse(buf):
-    pass
+def DNSQuestion_parse(buf):
+    return buf[12]
+    
 
 
 def main():
@@ -115,6 +115,7 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
+            print(buf)
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
 
