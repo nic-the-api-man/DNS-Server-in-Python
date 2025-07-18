@@ -116,7 +116,7 @@ def main():
             buf, source = udp_socket.recvfrom(512)
             transaction_id = struct.unpack("!H", buf[:2])[0]
             flags = struct.unpack("!H", buf[2:4])[0]
-            print(flags)
+            print(transaction_id)
             response = b''
             header = DNSHeader(transaction_id)
             question = DNSQuestion('codecrafters.io')
