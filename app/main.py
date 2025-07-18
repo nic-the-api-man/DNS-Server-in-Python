@@ -129,11 +129,8 @@ def main():
             header.rd = rd
 
             # Question Parsing
-            offset = 12
-            domain_name = buf[offset]
-            qtype, qclass = struct.unpack("!HH",buf[offset:offset+4])
-            print(domain_name, qclass, qtype)
-            question = DNSQuestion(domain_name, qtype, qclass)
+            
+            question = DNSQuestion(buf)
 
             # Answer Parsing
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
