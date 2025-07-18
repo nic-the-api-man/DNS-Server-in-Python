@@ -145,7 +145,7 @@ def main():
             question = DNSQuestion(parsed_domain_name)
 
             # Answer Parsing
-            answer = DNSAnswer('codecrafters.io', '8.8.8.8')
+            answer = DNSAnswer(question, '8.8.8.8')
 
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
             
