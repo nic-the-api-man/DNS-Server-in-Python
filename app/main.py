@@ -129,7 +129,7 @@ def main():
             header.rd = rd
 
             # Question Parsing
-            qname = struct.unpack("!H", buf[:0])
+            qname = struct.unpack("!H", buf[:2])[0]
             print(qname)
             question = DNSQuestion()
 
