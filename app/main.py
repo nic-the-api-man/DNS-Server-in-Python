@@ -68,7 +68,7 @@ class DNSHeader:
 
         #Bit-packed fields (stored individually first)
         self.qr = qr         # Response
-        self.opcode = 0   # Standard query
+        self.opcode = 9   # Standard query
         self.aa = aa         # Not authoritative
         self.tc = tc         # Not truncated
         self.rd = 1         # No recursion desired
