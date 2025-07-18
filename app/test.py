@@ -1,19 +1,16 @@
+import struct
 
-def parse_domain_name(raw, offset):
-    offset = 12
-    labels = []
-    while True:
-        length = raw[offset]
-        if length == 0:
-            break
-        offset += 1 # moves to the stard of the label
-        label = raw[offset:offset+length].decode()
-        labels.append(label)
-        offset += length
-    return '.'.join(labels)
+head = b'\x88\x1f\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00\x0ccodecrafters\x02io\x00\x00\x01\x00\x01'
 
+def header_parser(head):
+    transaction_id = struct.unpack("!H", head[:2])[0] # Parses transaction ID from buf
+    flags = struct.unpack("!H", head[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
+    qr = (flags >> 15) & 0x1 #1 bit
+    opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
+    rd = (flags >> 8) & 0x1 # 1 (Bit 8)
+    
+    return transaction_id, qr, opcode, rd
 
+x = header_parser(head)
 
-raw = b'O\xe5\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03abc\x0ccodecrafters\x02io\x00\x00\x01\x00\x01'
-
-x = parse_domain_name(raw, 12)
+print(x)

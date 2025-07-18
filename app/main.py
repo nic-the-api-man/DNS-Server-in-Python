@@ -99,6 +99,16 @@ class DNSHeader:
                                     )
     
 
+def header_parser(head):
+    transaction_id = struct.unpack("!H", head[:2])[0] # Parses transaction ID from buf
+    flags = struct.unpack("!H", head[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
+    qr = (flags >> 15) & 0x1 #1 bit
+    opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
+    rd = (flags >> 8) & 0x1 # 1 (Bit 8)
+    
+    return transaction_id, qr, opcode, rd
+
+
 def parse_domain_name(raw, offset):
     offset = 12
     labels = []
@@ -125,20 +135,17 @@ def main():
         try:
             buf, source = udp_socket.recvfrom(512)
 
-            transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
-            flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
+            # transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
+            # flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
 
-            # Header parsing
-            qr = (flags >> 15) & 0x1 #1 bit
-            opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
-            rd = (flags >> 8) & 0x1 # 1 (Bit 8)
-            response = b''
-            header = DNSHeader(transaction_id,
-                               qdcount=1,
-                               opcode=1
-            )
-            header.opcode = opcode
-            header.rd = rd
+            # # Header parsing
+            # qr = (flags >> 15) & 0x1 #1 bit
+            # opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
+            # rd = (flags >> 8) & 0x1 # 1 (Bit 8)
+            # response = b''
+            header = header_parser(buf)
+            # header.opcode = opcode
+            # header.rd = rd
 
             # Question Parsing
             parsed_domain_name = parse_domain_name(buf,12)
