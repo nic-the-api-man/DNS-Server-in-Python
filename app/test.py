@@ -8,8 +8,8 @@ def header_parser(head):
     qr = (flags >> 15) & 0x1 #1 bit
     opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
     rd = (flags >> 8) & 0x1 # 1 (Bit 8)
-    
-    return transaction_id, qr, opcode, rd
+    x = transaction_id, qr, opcode, rd
+    return [x[0],x[1],x[2]]
 
 x = header_parser(head)
 

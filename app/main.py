@@ -105,8 +105,8 @@ def header_parser(head):
     qr = (flags >> 15) & 0x1 #1 bit
     opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
     rd = (flags >> 8) & 0x1 # 1 (Bit 8)
-    
-    return transaction_id, qr, opcode, rd
+    x = transaction_id, qr, opcode, rd
+    return [x[0],x[1],x[2]]
 
 
 def parse_domain_name(raw, offset):
@@ -143,7 +143,13 @@ def main():
             # opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
             # rd = (flags >> 8) & 0x1 # 1 (Bit 8)
             # response = b''
-            header = header_parser(buf)
+            
+            headers = header_parser(buf)
+
+            header = DNSHeader(headers[0],
+                               headers[1],
+                               headers[2]
+            )
             # header.opcode = opcode
             # header.rd = rd
 
