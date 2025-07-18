@@ -130,7 +130,7 @@ def main():
 
             # Question Parsing
             domain_name =buf[12]
-            qtype, qclass = struct.unpack("!HH"buf(12:12+4))
+            qtype, qclass = struct.unpack("!HH",buf[12:12+4])
             question = DNSQuestion(domain_name, qtype, qclass)
 
             # Answer Parsing
