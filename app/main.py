@@ -51,7 +51,7 @@ class DNSQuestion:
         qclass_bytes = struct.pack('!H', self.qclass)
 
         # Step 3: Concat everything
-        # print(name_bytes + qtype_bytes + qclass_bytes)
+        print(name_bytes + qtype_bytes + qclass_bytes)
         return name_bytes + qtype_bytes + qclass_bytes
     
 class DNSHeader:
