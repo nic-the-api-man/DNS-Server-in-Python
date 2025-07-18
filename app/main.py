@@ -114,12 +114,16 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
+            transaction_id = struct.unpack("!H", buf[:2])[0]
+            
+
             response = b''
-            header = DNSHeader()
+            header = DNSHeader(transaction_id)
             question = DNSQuestion('codecrafters.io')
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
+
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
-            # print(response)
+            
 
             udp_socket.sendto(response, source)
             
