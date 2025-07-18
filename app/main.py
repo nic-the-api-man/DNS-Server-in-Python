@@ -119,8 +119,8 @@ def main():
             question = DNSQuestion('codecrafters.io')
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
-            
-    
+            print(response)
+
             udp_socket.sendto(response, source)
             
         except Exception as e:
