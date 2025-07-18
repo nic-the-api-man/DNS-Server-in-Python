@@ -130,7 +130,7 @@ def main():
 
             # Question Parsing
             
-            question = DNSQuestion(buf)
+            question = DNSQuestion('google.com')
 
             # Answer Parsing
             answer = DNSAnswer('codecrafters.io', '8.8.8.8')
