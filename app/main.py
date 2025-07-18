@@ -71,7 +71,7 @@ class DNSHeader:
         self.opcode = opcode   # Standard query
         self.aa = aa         # Not authoritative
         self.tc = tc         # Not truncated
-        self.rd = rd         # No recursion desired
+        self.rd = 1         # No recursion desired
         self.ra = ra         # No recusion available
         self.z = z          # Reserved  (3 bits)
         self.rcode = rcode      # no error
@@ -115,7 +115,7 @@ def main():
         try:
             buf, source = udp_socket.recvfrom(512)
             transaction_id = struct.unpack("!H", buf[:2])[0]
-            
+
 
             response = b''
             header = DNSHeader(transaction_id)
