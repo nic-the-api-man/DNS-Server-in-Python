@@ -113,11 +113,11 @@ def main():
     # Starts the UDP server at port 2053
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp_socket.bind(("127.0.0.1", 2053))
-    print(buf, source)
+   
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-
+             print(source)
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
