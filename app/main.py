@@ -30,7 +30,7 @@ class DNSAnswer:
     
 
 
-
+# DNS Question section
 class DNSQuestion:
     def __init__(self, domain_name, qtype=1, qclass=1):
         self.domain_name = domain_name # e.g., codecrafterts.io
@@ -53,6 +53,11 @@ class DNSQuestion:
         return name_bytes + qtype_bytes + qclass_bytes
 
 
+# def DNS_Header_Parser(self):
+#     id = buf[:12]
+#     qr =
+#     opcode =
+#     rd = 
         
 
 class DNSHeader:
@@ -96,25 +101,23 @@ class DNSHeader:
                         self.ancount,
                         self.nscount,
                         self.arcount
-                                        
-                        
-                        
-                        )
+                                    )
+    
+
 
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
 
-    # Uncomment this block to pass the first stage
     # Starts the UDP server at port 2053
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp_socket.bind(("127.0.0.1", 2053))
-    
+    print(buf, source)
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-        
+
             response = b''
             header = DNSHeader()
             question = DNSQuestion('codecrafters.io')
