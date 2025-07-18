@@ -115,7 +115,7 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-            print(buf[::12])
+            print(buf[:12])
             print(buf)
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
