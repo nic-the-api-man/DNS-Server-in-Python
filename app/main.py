@@ -188,6 +188,7 @@ def main():
             
             header.opcode = opcode
             header.rd = rd
+            header.ancount = len(parsed_domains)
 
             # Question Parsing
             parsed_domains = []
