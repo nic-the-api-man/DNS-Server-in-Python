@@ -160,7 +160,8 @@ def main():
    
             # Question and Answer Building
             parsed_domains = []
-            offset = 12
+            offset = 12 #This is used to index buf ahead of the header values
+
             for i in range(qd_counts):
                 labels, offset = parse_domain_name(buf, offset)
                 parsed_domains.append('.'.join(labels))
