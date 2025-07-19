@@ -109,18 +109,52 @@ class DNSHeader:
 #     return [x[0],x[1]]
 
 
-def parse_domain_name(raw, offset):
-    offset = 12
+# def parse_domain_name(raw, offset):
+#     offset = 12
+#     labels = []
+#     while True:
+#         length = raw[offset]
+#         if length == 0:
+#             break
+#         offset += 1 # moves to the stard of the label
+#         label = raw[offset:offset+length].decode()
+#         labels.append(label)
+#         offset += length
+#     return '.'.join(labels)
+
+def parse_domain_name(raw, offset, visited=None):
+    if visited is None:
+        visited = set()
+    
     labels = []
+    original_offset = offset
+    jumped = False
+
     while True:
-        length = raw[offset]
-        if length == 0:
+        length =raw[offset]
+
+        #Pointer handling
+        if (length & 0xC0) == 0xC0:
+            pointer = ((length & 0x3F) << 8) | raw[offset + 1]
+            if pointer in visited:
+                raise Exception("Loop Detected")
+            visited.add(pointer)
+
+            sub_labels,_= parse_domain_name(raw, pointer, visited)
+            labels.extend(sub_labels)
+            offset += 2
+            jumped = True
             break
-        offset += 1 # moves to the stard of the label
-        label = raw[offset:offset+length].decode()
-        labels.append(label)
-        offset += length
-    return '.'.join(labels)
+
+        elif length == 0:
+            offset += 1
+            break
+        else:
+            offset += 1
+            label = raw[offset:offset + length].decode()
+            labels.append(label)
+            offset += length
+    return labels, (offset if not jumped else original_offset + 2)
 
 def qd_counter(qd):
     qd = struct.unpack("!H", qd[4:6])[0]
