@@ -193,7 +193,7 @@ def main():
             # Question Parsing
             parsed_domains = []
             header.ancount = len(parsed_domains)
-            
+
             offset = 12
             for i in range(qd_counts):
                 labels, offset = parse_domain_name(buf, offset)
@@ -201,15 +201,15 @@ def main():
                 offset += 4
 
             question_bytes = b''
+            answer_bytes = b''
             for domain in parsed_domains:
-                print(domain)
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
 
 
 
                 # Answer Parsing
-                answer_bytes = b''
+                
                 a = DNSAnswer(domain, '8.8.8.8')
                 answer_bytes += a.to_bytes()
                 
