@@ -154,7 +154,7 @@ def parse_domain_name(raw, offset, visited=None):
             label = raw[offset:offset + length].decode()
             labels.append(label)
             offset += length
-    return labels, (offset if not jumped else original_offset + 2)
+    return labels[0], (offset if not jumped else original_offset + 2)
 
 def qd_counter(qd):
     qd = struct.unpack("!H", qd[4:6])[0]
@@ -191,7 +191,7 @@ def main():
 
             # Question Parsing
             parsed_domain_name = parse_domain_name(buf,12)
-            print(parsed_domain_name[0])
+            print(parsed_domain_name)
             question = DNSQuestion(parsed_domain_name)
 
             # Answer Parsing
