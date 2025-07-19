@@ -2,7 +2,6 @@ import socket
 import struct
 
 
-
 class DNSAnswer: #This class represents a DNS query. Can convert itself into bytes following a a DNS query
     def __init__(self, domain_name, ip_address, ttl=60):
         self.domain_name = domain_name
@@ -53,6 +52,7 @@ class DNSQuestion:
         # Step 3: Concat everything
         return name_bytes + qtype_bytes + qclass_bytes
     
+
 class DNSHeader:
     def __init__(self, id=0, qr=1, opcode=1, aa=0, tc=0, rd=0, ra=0, z=0, rcode=0,
                  qdcount=1, ancount=1, nscount=0, arcount=0):
@@ -97,30 +97,7 @@ class DNSHeader:
                         self.nscount,
                         self.arcount
                                     )
-    
 
-# def header_parser(head):
-#     transaction_id = struct.unpack("!H", head[:2])[0] # Parses transaction ID from buf
-#     flags = struct.unpack("!H", head[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
-#     qr = (flags >> 15) & 0x1 #1 bit
-#     opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
-#     rd = (flags >> 8) & 0x1 # 1 (Bit 8)
-#     x = transaction_id, opcode
-#     return [x[0],x[1]]
-
-
-# def parse_domain_name(raw, offset):
-#     offset = 12
-#     labels = []
-#     while True:
-#         length = raw[offset]
-#         if length == 0:
-#             break
-#         offset += 1 # moves to the stard of the label
-#         label = raw[offset:offset+length].decode()
-#         labels.append(label)
-#         offset += length
-#     return '.'.join(labels)
 
 def parse_domain_name(raw, offset, visited=None):
     if visited is None:
@@ -173,27 +150,16 @@ def main():
             buf, source = udp_socket.recvfrom(512)
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
-            print(transaction_id)
-            # Header parsing
+
+            # Flag building          
             qr = (flags >> 15) & 0x1 #1 bit
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
             rd = (flags >> 8) & 0x1 # 1 (Bit 8)
             response = b''
-
-            # headers = header_parser(buf)
             qd_counts = qd_counter(buf)
-            # header = DNSHeader(transaction_id,
-            #                    qdcount = qd_counts,
-            #                    opcode=1)
-            
-            # header.opcode = opcode
-            # header.rd = rd
-            # header.ancount = len(parsed_domains)
-
-            # Question Parsing
+   
+            # Question and Answer Building
             parsed_domains = []
-            
-
             offset = 12
             for i in range(qd_counts):
                 labels, offset = parse_domain_name(buf, offset)
@@ -206,16 +172,11 @@ def main():
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
 
-
-
-                # Answer Parsing
-                
                 a = DNSAnswer(domain, '8.8.8.8')
                 answer_bytes += a.to_bytes()
                 print(answer_bytes)
-            
-            # qd_counts = qd_counter(buf)
 
+            #Building the header
             header = DNSHeader(transaction_id,
                                qdcount = len(parsed_domains),
                                ancount= len(parsed_domains),
@@ -234,13 +195,5 @@ def main():
             break
 
 
-
-
 if __name__ == "__main__":
     main()
-
-            # parsed_domain_name = parse_domain_name(buf,12)
-            # parsed_domain_name = parsed_domain_name[0]
-            # full_domain = '.'.join(parsed_domain_name)
-            # print(full_domain)
-            # question = DNSQuestion(full_domain)
