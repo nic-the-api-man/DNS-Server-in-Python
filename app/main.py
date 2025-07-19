@@ -201,14 +201,14 @@ def main():
             for domain in parsed_domains:
                 print(domain)
                 q = DNSQuestion(domain)
-                question_bytes = q.to_bytes()
+                question_bytes += q.to_bytes()
 
 
 
                 # Answer Parsing
                 answer_bytes = b''
                 a = DNSAnswer(domain, '8.8.8.8')
-                answer_bytes = a.to_bytes()
+                answer_bytes += a.to_bytes()
                 
             response = header.to_bytes() + question_bytes + answer_bytes
 
