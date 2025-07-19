@@ -174,7 +174,6 @@ def main():
 
                 a = DNSAnswer(domain, '8.8.8.8')
                 answer_bytes += a.to_bytes()
-                print(answer_bytes)
 
             #Building the header
             header = DNSHeader(transaction_id,
