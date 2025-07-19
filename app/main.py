@@ -122,9 +122,9 @@ def parse_domain_name(raw, offset):
         offset += length
     return '.'.join(labels)
 
-def qd_counter(raw):
-    raw = struct.unpack("!H", raw[4:6])[0]
-    return raw
+def qd_counter(qd):
+    qd = struct.unpack("!H", qd[4:6])[0]
+    return qd
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
