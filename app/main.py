@@ -192,7 +192,7 @@ def main():
             # Question Parsing
             parsed_domain_name = parse_domain_name(buf,12)
             print(parsed_domain_name)
-            question = DNSQuestion(parsed_domain_name)
+            question = DNSQuestion(parsed_domain_name[0])
 
             # Answer Parsing
             answer = DNSAnswer(parsed_domain_name, '8.8.8.8')
