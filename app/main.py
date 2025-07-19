@@ -205,10 +205,11 @@ def main():
 
 
                 # Answer Parsing
+                answer_bytes = b''
                 a = DNSAnswer(domain, '8.8.8.8')
-                answer = a.to_bytes()
+                answer_bytes = a.to_bytes()
                 
-            response = header.to_bytes() + question_bytes + answer
+            response = header.to_bytes() + question_bytes + answer_bytes
 
             udp_socket.sendto(response, source)
             
