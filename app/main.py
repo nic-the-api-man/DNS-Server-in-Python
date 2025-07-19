@@ -121,7 +121,10 @@ def parse_domain_name(raw, offset):
         labels.append(label)
         offset += length
     return '.'.join(labels)
-        
+
+def qd_counter(raw):
+    raw = struct.unpack("!H", raw[4:6])[0]
+    return raw
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -142,10 +145,11 @@ def main():
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
             rd = (flags >> 8) & 0x1 # 1 (Bit 8)
             response = b''
+            
             # headers = header_parser(buf)
-
+            qd_counts = qd_counter(buf)
             header = DNSHeader(transaction_id,
-                               qdcount=2,
+                               qd_counts,
                                opcode=1)
             
             header.opcode = opcode
