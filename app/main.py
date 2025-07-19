@@ -137,7 +137,7 @@ def main():
 
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
-
+            print(flags)
             # Header parsing
             qr = (flags >> 15) & 0x1 #1 bit
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
@@ -160,7 +160,7 @@ def main():
             answer = DNSAnswer(parsed_domain_name, '8.8.8.8')
 
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
-            print(buf)
+
 
             udp_socket.sendto(response, source)
             
