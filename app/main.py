@@ -190,16 +190,25 @@ def main():
             header.rd = rd
 
             # Question Parsing
-            parsed_domain_name = parse_domain_name(buf,12)
-            parsed_domain_name = parsed_domain_name[0]
-            full_domain = '.'.join(parsed_domain_name)
-            print(full_domain)
-            question = DNSQuestion(full_domain)
+            parsed_domains = []
+            offset = 12
+            for i in range(qd_counts):
+                labels, offset = parse_domain_name(buf, offset)
+                parsed_domains.append('.'.join(labels))
+                offset += 4
 
-            # Answer Parsing
-            answer = DNSAnswer(full_domain, '8.8.8.8')
-            
-            response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
+            question_bytes = b''
+            for domain in parsed_domains:
+                q = DNSQuestion(domain)
+                question_bytes = q.to_bytes()
+
+
+
+                # Answer Parsing
+                a = DNSAnswer(domain, '8.8.8.8')
+                answer = a.to_bytes()
+                
+            response = header.to_bytes() + question_bytes + answer
 
             udp_socket.sendto(response, source)
             
@@ -212,3 +221,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+            # parsed_domain_name = parse_domain_name(buf,12)
+            # parsed_domain_name = parsed_domain_name[0]
+            # full_domain = '.'.join(parsed_domain_name)
+            # print(full_domain)
+            # question = DNSQuestion(full_domain)
