@@ -147,8 +147,8 @@ def main():
 
             header = DNSHeader(transaction_id,
                                qdcount=1,
-                               opcode=1
-            )
+                               opcode=1)
+            
             header.opcode = opcode
             header.rd = rd
 
@@ -158,9 +158,8 @@ def main():
 
             # Answer Parsing
             answer = DNSAnswer(parsed_domain_name, '8.8.8.8')
-
+            print(answer)
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
-
 
             udp_socket.sendto(response, source)
             
