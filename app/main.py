@@ -214,8 +214,8 @@ def main():
                 answer_bytes += a.to_bytes()
                 print(answer_bytes)
             
-            qd_counts = qd_counter(buf)
-            
+            # qd_counts = qd_counter(buf)
+
             header = DNSHeader(transaction_id,
                                qdcount = len(parsed_domains),
                                ancount= len(parsed_domains),
