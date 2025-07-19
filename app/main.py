@@ -134,7 +134,7 @@ def main():
     while True:
         try:
             buf, source = udp_socket.recvfrom(512)
-
+            print(buf)
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
 
@@ -142,9 +142,6 @@ def main():
             qr = (flags >> 15) & 0x1 #1 bit
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
             rd = (flags >> 8) & 0x1 # 1 (Bit 8)
-            print(qr)
-            print(opcode)
-            print(rd)
             response = b''
             # headers = header_parser(buf)
 
