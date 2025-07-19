@@ -1,7 +1,3 @@
-import struct
-
-head = b'\x88\x1f\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00\x0ccodecrafters\x02io\x00\x00\x01\x00\x01'
-
 def header_parser(head):
     transaction_id = struct.unpack("!H", head[:2])[0] # Parses transaction ID from buf
     flags = struct.unpack("!H", head[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
@@ -10,7 +6,3 @@ def header_parser(head):
     rd = (flags >> 8) & 0x1 # 1 (Bit 8)
     x = transaction_id, qr, opcode, rd
     return [x[0],x[1],x[2]]
-
-x = header_parser(head)
-
-print(x)
