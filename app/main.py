@@ -199,6 +199,7 @@ def main():
 
             question_bytes = b''
             for domain in parsed_domains:
+                print(domain)
                 q = DNSQuestion(domain)
                 question_bytes = q.to_bytes()
 
