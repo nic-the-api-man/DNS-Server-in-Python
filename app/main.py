@@ -157,7 +157,7 @@ def main():
 
             # Question Parsing
             parsed_domain_name = parse_domain_name(buf,12)
-            print(parsed_domain_name)
+            print(buf)
             question = DNSQuestion(parsed_domain_name)
 
             # Answer Parsing
