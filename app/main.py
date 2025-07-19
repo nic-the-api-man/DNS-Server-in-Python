@@ -194,7 +194,7 @@ def main():
             parsed_domain_name = parsed_domain_name[0]
             full_domain = '.'.join(parsed_domain_name)
             print(full_domain)
-            question = DNSQuestion(parsed_domain_name)
+            question = DNSQuestion(full_domain)
 
             # Answer Parsing
             answer = DNSAnswer(parsed_domain_name, '8.8.8.8')
