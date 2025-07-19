@@ -55,11 +55,11 @@ class DNSQuestion:
     
 class DNSHeader:
     def __init__(self, id=0, qr=1, opcode=1, aa=0, tc=0, rd=0, ra=0, z=0, rcode=0,
-                 qdcount=0, ancount=1, nscount=0, arcount=0):
+                 qdcount=1, ancount=1, nscount=0, arcount=0):
         
         # 16-bit fields section counts
         self.id =  id
-        self.qdcount = 0
+        self.qdcount = qdcount
         self.ancount = ancount
         self.nscount = nscount
         self.arcount = arcount
@@ -140,7 +140,6 @@ def main():
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
             # print(transaction_id)
-
             # Header parsing
             qr = (flags >> 15) & 0x1 #1 bit
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
@@ -151,7 +150,7 @@ def main():
             qd_counts = qd_counter(buf)
             print(qd_counts)
             header = DNSHeader(transaction_id,
-                               qd_counts,
+                               qdcount = qd_counts,
                                opcode=1)
             
             header.opcode = opcode
