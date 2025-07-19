@@ -188,10 +188,12 @@ def main():
             
             header.opcode = opcode
             header.rd = rd
-            header.ancount = len(parsed_domains)
+            
 
             # Question Parsing
             parsed_domains = []
+            header.ancount = len(parsed_domains)
+            
             offset = 12
             for i in range(qd_counts):
                 labels, offset = parse_domain_name(buf, offset)
