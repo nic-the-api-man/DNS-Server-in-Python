@@ -197,7 +197,7 @@ def main():
             question = DNSQuestion(full_domain)
 
             # Answer Parsing
-            answer = DNSAnswer(parsed_domain_name, '8.8.8.8')
+            answer = DNSAnswer(full_domain, '8.8.8.8')
             
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
 
