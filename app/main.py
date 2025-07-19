@@ -154,11 +154,12 @@ def main():
 
             # Question Parsing
             parsed_domain_name = parse_domain_name(buf,12)
+            print(parsed_domain_name)
             question = DNSQuestion(parsed_domain_name)
 
             # Answer Parsing
             answer = DNSAnswer(parsed_domain_name, '8.8.8.8')
-            print(answer)
+            
             response = header.to_bytes() + question.to_bytes() + answer.to_bytes()
 
             udp_socket.sendto(response, source)
