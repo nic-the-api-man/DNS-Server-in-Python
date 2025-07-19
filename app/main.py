@@ -181,7 +181,7 @@ def main():
             response = b''
 
             # headers = header_parser(buf)
-            # qd_counts = qd_counter(buf)
+            qd_counts = qd_counter(buf)
             # header = DNSHeader(transaction_id,
             #                    qdcount = qd_counts,
             #                    opcode=1)
