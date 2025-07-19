@@ -181,18 +181,18 @@ def main():
             response = b''
 
             # headers = header_parser(buf)
-            qd_counts = qd_counter(buf)
-            header = DNSHeader(transaction_id,
-                               qdcount = qd_counts,
-                               opcode=1)
+            # qd_counts = qd_counter(buf)
+            # header = DNSHeader(transaction_id,
+            #                    qdcount = qd_counts,
+            #                    opcode=1)
             
-            header.opcode = opcode
-            header.rd = rd
-            
+            # header.opcode = opcode
+            # header.rd = rd
+            # header.ancount = len(parsed_domains)
 
             # Question Parsing
             parsed_domains = []
-            header.ancount = len(parsed_domains)
+            
 
             offset = 12
             for i in range(qd_counts):
@@ -213,6 +213,17 @@ def main():
                 a = DNSAnswer(domain, '8.8.8.8')
                 answer_bytes += a.to_bytes()
                 print(answer_bytes)
+            
+            qd_counts = qd_counter(buf)
+            
+            header = DNSHeader(transaction_id,
+                               qdcount = len(parsed_domains),
+                               ancount= len(parsed_domains),
+                               opcode=opcode,
+                               rd=rd
+                               
+                               )
+        
             
             response = header.to_bytes() + question_bytes + answer_bytes
 
