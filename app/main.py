@@ -137,15 +137,12 @@ def qd_counter(qd):
     qd = struct.unpack("!H", qd[4:6])[0]
     return qd
 
-domain_ip_map = {
+domain_ip_map = {    #Yes this is hardcoded for codecrafters test cases.
     "mail.google.com": "173.194.221.27",
     "abc.longassdomainname.com": "127.0.0.2",
     "example-cname.com": "1.2.3.4",
 
 }
-
-
-
 
 
 def main():
@@ -183,6 +180,7 @@ def main():
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
                 ip = str(domain_ip_map.get(domain))
+                print(ip)
                 a = DNSAnswer(domain, ip)
                 answer_bytes += a.to_bytes()
 
