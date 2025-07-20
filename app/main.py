@@ -173,8 +173,6 @@ def main():
             question_bytes = b''
             answer_bytes = b''
             for domain in parsed_domains:
-                print(domain)
-                print(buf)
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
 
@@ -189,9 +187,9 @@ def main():
                                rd=rd
                                
                                )
-        
             
             response = header.to_bytes() + question_bytes + answer_bytes
+            print(response)
 
             udp_socket.sendto(response, source)
             
