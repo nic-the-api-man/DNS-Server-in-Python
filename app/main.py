@@ -183,7 +183,7 @@ def main():
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
                 ip = domain_ip_map.get(domain)
-                a = DNSAnswer(domain, ip)
+                a = DNSAnswer(domain, '127.0.0.1')
                 answer_bytes += a.to_bytes()
 
             #Building the header
