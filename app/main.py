@@ -173,6 +173,7 @@ def main():
             question_bytes = b''
             answer_bytes = b''
             for domain in parsed_domains:
+                print(domain)
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
 
@@ -180,7 +181,6 @@ def main():
                 answer_bytes += a.to_bytes()
 
             #Building the header
-            print(source[0])
             header = DNSHeader(transaction_id,
                                qdcount = len(parsed_domains),
                                ancount= len(parsed_domains),
