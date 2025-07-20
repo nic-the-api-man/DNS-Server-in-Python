@@ -177,10 +177,10 @@ def main():
             question_bytes = b''
             answer_bytes = b''
             for domain in parsed_domains:
+                print(domain)
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
-                ip = str(domain_ip_map.get(domain))
-                print(ip)
+                ip = domain_ip_map.get(domain)
                 a = DNSAnswer(domain, ip)
                 answer_bytes += a.to_bytes()
 
