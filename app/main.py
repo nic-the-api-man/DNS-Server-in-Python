@@ -140,7 +140,7 @@ def qd_counter(qd):
 domain_ip_map = {    #Yes this is hardcoded for codecrafters test cases.
     "mail.google.com": "173.194.221.27",
     "abc.longassdomainname.com": "127.0.0.2",
-    "example-cname.com": "1.2.3.4",
+    "example-cname.com": "192.168.0.1",
     "codecrafters.io": "127.0.0.1",
     "github.com": "127.0.0.1"
 
@@ -183,7 +183,7 @@ def main():
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
                 ip = domain_ip_map.get(domain)
-                a = DNSAnswer(domain, '127.0.0.1')
+                a = DNSAnswer(domain, ip)
                 answer_bytes += a.to_bytes()
 
             #Building the header
