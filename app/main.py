@@ -182,8 +182,8 @@ def main():
             for domain in parsed_domains:
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
-                ip = domain_ip_map.get(domain)
-                a = DNSAnswer(domain, str(ip))
+                ip = str(domain_ip_map.get(domain))
+                a = DNSAnswer(domain, ip)
                 answer_bytes += a.to_bytes()
 
             #Building the header
