@@ -178,7 +178,7 @@ def main():
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
 
-                a = DNSAnswer(domain, '8.8.8.8')
+                a = DNSAnswer(domain, '127.0.0.1')
                 answer_bytes += a.to_bytes()
 
             #Building the header
