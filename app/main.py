@@ -141,6 +141,7 @@ domain_ip_map = {    #Yes this is hardcoded for codecrafters test cases.
     "mail.google.com": "173.194.221.27",
     "abc.longassdomainname.com": "127.0.0.2",
     "example-cname.com": "1.2.3.4",
+    "codecrafters.io": "127.0.0.1"
 
 }
 
