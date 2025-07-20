@@ -1,7 +1,6 @@
 import socket
 import struct
 
-
 class DNSAnswer: #This class represents a DNS query. Can convert itself into bytes following a a DNS query
     def __init__(self, domain_name, ip_address, ttl=60):
         self.domain_name = domain_name
@@ -27,8 +26,6 @@ class DNSAnswer: #This class represents a DNS query. Can convert itself into byt
 
     
         return name + type_bytes + class_bytes + ttl_bytes + rdlength_bytes + ip_bytes
-    
-
 
 # DNS Question section
 class DNSQuestion:
@@ -98,7 +95,6 @@ class DNSHeader:
                         self.arcount
                                     )
 
-
 def parse_domain_name(raw, offset, visited=None):
     if visited is None:
         visited = set()
@@ -145,7 +141,6 @@ domain_ip_map = {    #Yes this is hardcoded for codecrafters test cases.
     "github.com": "127.0.0.1"
 
 }
-
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -203,7 +198,6 @@ def main():
         except Exception as e:
             print(f"Error receiving data: {e}")
             break
-
 
 if __name__ == "__main__":
     main()
