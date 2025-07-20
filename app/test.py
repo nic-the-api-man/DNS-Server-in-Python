@@ -51,20 +51,5 @@ print(second_labels)
 
 
 
-#     offset = 12
-#     labels = []
-#     while True:
-#         length = raw[offset]
-#         if length == 0:
-#             break
-#         offset += 1 # moves to the stard of the label
-#         label = raw[offset:offset+length].decode()
-#         labels.append(label)
-#         offset += length
-#     return '.'.join(labels)
-
-
-# questions = []
-# offset = 12
 
 

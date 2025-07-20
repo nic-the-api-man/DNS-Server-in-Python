@@ -137,6 +137,10 @@ def qd_counter(qd):
     qd = struct.unpack("!H", qd[4:6])[0]
     return qd
 
+# def get_ip_address(raw):
+
+
+
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
@@ -150,7 +154,7 @@ def main():
             buf, source = udp_socket.recvfrom(512)
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
-
+            print(buf)
             # Flag building          
             qr = (flags >> 15) & 0x1 #1 bit
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
