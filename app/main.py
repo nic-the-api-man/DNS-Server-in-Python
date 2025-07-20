@@ -144,7 +144,7 @@ domain_ip_map = {
 
 }
 
-ip = domain_ip_map.get(domain, "127.0.0.1")
+
 
 
 
