@@ -154,7 +154,6 @@ def main():
             buf, source = udp_socket.recvfrom(512)
             transaction_id = struct.unpack("!H", buf[:2])[0] # Parses transaction ID from buf
             flags = struct.unpack("!H", buf[2:4])[0] # Parses flags from buf, mainly qr, opcode, and rd
-            print(source[0])
             # Flag building          
             qr = (flags >> 15) & 0x1 #1 bit
             opcode = (flags >> 11) & 0xF # 4 bits (bits 11 - 4)
@@ -181,6 +180,7 @@ def main():
                 answer_bytes += a.to_bytes()
 
             #Building the header
+            print(source[0])
             header = DNSHeader(transaction_id,
                                qdcount = len(parsed_domains),
                                ancount= len(parsed_domains),
