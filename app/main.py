@@ -137,7 +137,14 @@ def qd_counter(qd):
     qd = struct.unpack("!H", qd[4:6])[0]
     return qd
 
-# def get_ip_address(raw):
+domain_ip_map = {
+    "mail.google.com": "173.194.221.27",
+    "abc.longassdomainname.com": "127.0.0.2",
+    "example-cname.com": "1.2.3.4",
+
+}
+
+ip = domain_ip_map.get(domain, "127.0.0.1")
 
 
 
@@ -175,8 +182,8 @@ def main():
             for domain in parsed_domains:
                 q = DNSQuestion(domain)
                 question_bytes += q.to_bytes()
-
-                a = DNSAnswer(domain, '127.0.0.1')
+                ip = domain_ip_map.get(domain)
+                a = DNSAnswer(domain, ip)
                 answer_bytes += a.to_bytes()
 
             #Building the header
